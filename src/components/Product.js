@@ -205,7 +205,8 @@ const styles = StyleSheet.create({
     promotionColumn2: {
         flex: 0.65,
         justifyContent: 'center',
-        alignItems: 'flex-start'
+        alignItems: 'flex-start',
+        marginRight: 25
     },
     productPrice: {
         color: '#fff',

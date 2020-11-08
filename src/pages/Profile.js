@@ -46,6 +46,30 @@ const PRODUCTS = [
         price: '29,99',
         image: 'https://media.glassdoor.com/sqll/2482728/zaffari-squarelogo-1558435516909.png'
     },
+    {
+        id: '58694a0f-3da1-471f-bd96-145571ea129d72',
+        name: 'Terceiro Produto',
+        price: '29,99',
+        image: 'https://media.glassdoor.com/sqll/2482728/zaffari-squarelogo-1558435516909.png'
+    },
+    {
+        id: '58694a0f-3da1-471f-bd96-145571ea219d72',
+        name: 'Terceiro Produto',
+        price: '29,99',
+        image: 'https://media.glassdoor.com/sqll/2482728/zaffari-squarelogo-1558435516909.png'
+    },
+    {
+        id: '58694a0f-3da1-471f-bd96-145571ea259d72',
+        name: 'Terceiro Produto',
+        price: '29,99',
+        image: 'https://media.glassdoor.com/sqll/2482728/zaffari-squarelogo-1558435516909.png'
+    },
+    {
+        id: '58694a0f-3da1-471f-bd96-145571ea2967d72',
+        name: 'Terceiro Produto',
+        price: '29,99',
+        image: 'https://media.glassdoor.com/sqll/2482728/zaffari-squarelogo-1558435516909.png'
+    },
 ];
 
 
@@ -198,6 +222,7 @@ const styles = StyleSheet.create({
     name: {
         fontSize: 18,
         color: '#fff',
+        zIndex: 99,
     },
     itemContent: {
         width: '100%',

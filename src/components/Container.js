@@ -1,12 +1,12 @@
 import React from 'react';
-import { View, StyleSheet, Platform, Dimensions } from 'react-native';
+import { View, StyleSheet, ScrollView, Platform, Dimensions } from 'react-native';
 
 const Container = ({ children }) => (
-    <View styles={styles.background}>
+    <ScrollView styles={styles.background}>
         <View styles={getContainerStyle()}>
             {children}
         </View>
-    </View>
+    </ScrollView>
 )
 
 // const memoizedErrors = useMemo(() => <Errors active={showErrors} />, [showErrors]);

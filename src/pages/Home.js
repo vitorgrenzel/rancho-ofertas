@@ -14,17 +14,16 @@ import SafeAreaView from 'react-native-safe-area-view';
 import Header from '../components/Header';
 import Container from '../components/Container';
 
-const Promotions = [
-  {
-    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    name: 'File de peito de Frango 1kg',
-    price: '9,99',
-    image: 'https://www.auroraalimentos.com.br/extranet/thumbnail/fill/500x400/Produto/1654___file_de_peito_aurora_1555331616097.png',
-    profile: {
-      image: 'https://play-lh.googleusercontent.com/Z3ULm72r8xsy1wk6vBRDeppON2j7JySEiE6q6NLVWeOo41ZUf5J6CYEeRyoc3i3anRY',
-    }
+const Promotions = {
+  id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+  name: 'File de peito de Frango 1kg',
+  price: '9,99',
+  image: 'https://www.auroraalimentos.com.br/extranet/thumbnail/fill/500x400/Produto/1654___file_de_peito_aurora_1555331616097.png',
+  profile: {
+    image: 'https://play-lh.googleusercontent.com/Z3ULm72r8xsy1wk6vBRDeppON2j7JySEiE6q6NLVWeOo41ZUf5J6CYEeRyoc3i3anRY',
   }
-]
+};
+
 // {
 //   id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
 //   name: 'Caixa de Leite',
@@ -152,10 +151,6 @@ const Category = ({ key, name, image, navigation, redirectTo }) => {
 
 function Home({ navigation }) {
 
-  const renderPromotionItem = ({ item }) => (
-    <Promotion id={item.id} name={item.name} image={item.image} profile={item.profile} price={item.price} navigation={navigation} />
-  );
-
   const renderCategory = ({ item }) => (
     <Category id={item.id} name={item.name} image={item.image} navigation={navigation} redirectTo='Category' />
   );
@@ -166,29 +161,30 @@ function Home({ navigation }) {
 
   return (
     <Container>
-      <SafeAreaView style={styles.container}>
 
-        <View style={{ paddingHorizontal: 15 }}>
-          <Header isHome={true} />
-        </View>
+      <Header isHome={true} />
 
-        <ScrollView
-          showsVerticalScrollIndicator={false}
-          contentContainerStyle={{
-            flexGrow: 1,
-            justifyContent: 'space-between'
-          }}
-        >
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{
+          flexGrow: 1,
+          justifyContent: 'space-between'
+        }}
+      >
+        <SafeAreaView style={styles.container}>
 
           <View style={styles.promotion}>
             {/* <Text style={styles.title}>Promoções</Text> */}
-            <FlatList
+
+            <Promotion id={Promotions.id} name={Promotions.name} image={Promotions.image} profile={Promotions.profile} price={Promotions.price} navigation={navigation} />
+
+            {/* <FlatList
               horizontal
               data={Promotions}
               renderItem={renderPromotionItem}
               keyExtractor={item => item.id}
               showsHorizontalScrollIndicator={false}
-            />
+            /> */}
           </View>
 
           <View style={styles.category}>
@@ -236,12 +232,15 @@ function Home({ navigation }) {
               </View>
             </TouchableOpacity>
           </View>
-        </ScrollView>
 
-      </SafeAreaView>
+        </SafeAreaView>
+      </ScrollView>
+
     </Container>
   );
 }
+
+const { width, fontScale } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
   container: {
@@ -250,8 +249,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#f3fdff',
   },
   promotion: {
-    flex: 3.2,
-    height: 320,
+    flex: 2,
+    minHeight: 300,
     paddingHorizontal: 15,
     marginBottom: 15
   },
@@ -272,7 +271,7 @@ const styles = StyleSheet.create({
   popular: {
     flex: 2,
     paddingHorizontal: 15,
-    height: 230,
+    height: 200,
     marginBottom: 15
   },
   title: {
@@ -298,6 +297,7 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 18,
     color: '#fff',
+    zIndex: 99,
   },
   itemContent: {
     width: '100%',
@@ -316,6 +316,7 @@ const styles = StyleSheet.create({
   // MAIS RELEVANTE
   popularItem: {
     flex: 1,
+    position: 'relative'
   },
   popularBackground: {
     position: 'absolute',
@@ -338,36 +339,40 @@ const styles = StyleSheet.create({
   },
   popularItemContent: {
     flex: 1,
-    justifyContent: 'flex-end'
+    justifyContent: 'flex-end',
   },
   popularTextContent: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
     paddingBottom: 20,
+    paddingHorizontal: 15,
   },
   popularName: {
-    fontSize: 26,
+    fontSize: 22 / fontScale,
     color: '#fff',
     fontWeight: 'bold',
   },
   popularPrice: {
-    fontSize: 26,
+    fontSize: 22 / fontScale,
     color: '#fff',
     borderRadius: 10,
     padding: 5,
+    marginLeft: 5,
     backgroundColor: 'red'
   },
   // SECTION: PROMOÇÕES
   promotionItem: {
     flex: 1,
+    position: 'relative',
     flexDirection: 'row',
-    width: windowWidth - 30,
+    // width: windowWidth,
+    maxHeight: 320,
     // marginVertical: 20,
   },
   promotionBackground: {
     position: 'absolute',
-    width: '95%',
+    width: '100%',
     height: windowWidth * 0.6,
     bottom: 0,
     aspectRatio: 1,
@@ -376,10 +381,10 @@ const styles = StyleSheet.create({
   },
   promotionImage: {
     position: 'absolute',
-    top: -(windowWidth * 0.1),
+    top: 0,
     right: -40,
     width: '100%',
-    height: '100%',
+    height: 200,
     aspectRatio: 1,
     borderRadius: 100,
     overflow: 'hidden',
@@ -415,7 +420,14 @@ const styles = StyleSheet.create({
     overflow: 'hidden',
     zIndex: 99
   },
-  line: {},
+  line: {
+    // backgroundColor: 'yellow',
+    // position: 'absolute',
+    // top: 70,
+    // left: 0,
+    // width: 50,
+    // height: 5
+  },
   promotionName: {
     fontSize: 26,
     color: '#fff',

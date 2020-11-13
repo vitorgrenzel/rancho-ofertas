@@ -2,22 +2,26 @@ import * as React from 'react';
 import { View, Text, FlatList, StyleSheet, Image, StatusBar } from 'react-native';
 import SafeAreaView from 'react-native-safe-area-view';
 
-import Header from '../components/Header';
+import Header from '../../components/Header';
+import { Product } from '../../components/Product';
 
 const DATA = [
     {
         id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        name: 'Zafari',
-        image: 'https://media.glassdoor.com/sqll/2482728/zaffari-squarelogo-1558435516909.png'
+        name: 'Primeiro Produto',
+        price: '9,99',
+        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQM5R2lJiuLjlH6HRfuxR3ubmi8R7d9AFOz3A&usqp=CAU'
     },
     {
         id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        name: 'Compre Bem',
-        image: 'https://media.glassdoor.com/sqll/2482728/zaffari-squarelogo-1558435516909.png'
+        name: 'Segundo Produto',
+        price: '19,99',
+        image: 'https://carrefourbr.vtexassets.com/arquivos/ids/189948-800-auto?width=800&height=auto&aspect=true'
     },
     {
-        id: '58694a0f-3da1-471f-bd96-145571e29d72',
-        name: 'Super Útil',
+        id: '58694a0f-3da1-471f-bd96-145571ea29d72',
+        name: 'Terceiro Produto',
+        price: '29,99',
         image: 'https://media.glassdoor.com/sqll/2482728/zaffari-squarelogo-1558435516909.png'
     },
 ];
@@ -27,16 +31,16 @@ const Item = ({ name, image }) => (
         <Image source={{ uri: image }} style={styles.avatar} />
         <View style={styles.itemContent}>
             <Text style={styles.name}>{name}</Text>
-            <Text style={styles.description}>1,8km de distância</Text>
+            <Text style={styles.name}>{name}</Text>
         </View>
     </View>
 );
 
-const Stores = ({ route, navigation }) => {
-    const { name } = route.params ?? {name: 'Todos Estabelecimentos'};
+const Category = ({ route }) => {
+    const { name } = route.params ?? { name: 'Todas Categorias' };
 
     const renderItem = ({ item }) => (
-        <Item name={item.name} image={item.image} />
+        <Product name={item.name} image={item.image} price={item.price} />
     );
 
     return (
@@ -84,11 +88,7 @@ const styles = StyleSheet.create({
     },
     itemContent: {
         width: '100%',
-    },
-    description:{
-        fontSize: 16,
-        color: 'gray',
     }
 });
 
-export default Stores;
+export default Category;

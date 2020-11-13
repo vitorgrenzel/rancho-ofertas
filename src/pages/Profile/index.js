@@ -1,78 +1,17 @@
 import * as React from 'react';
 import { View, Text, FlatList, StyleSheet, StatusBar, Image, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
-// import SafeAreaView from 'react-native-safe-area-view';
 import { AntDesign } from '@expo/vector-icons';
 
-const CATEGORY = [
-    {
-        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        name: 'Carnes',
-        image: 'https://aguiarbuenosaires.com/wp-content/uploads/2016/06/carnes-argentinas-cortes-dicas-cortes-2.jpg'
-    },
-    {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        name: 'Vegetais',
-        image: 'https://64.media.tumblr.com/0091ce5b8c09418f9762d59457c5e43a/tumblr_p4yxjek5UR1uoxyuao1_400.jpg'
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571e29d72',
-        name: 'Limpeza',
-        image: 'https://64.media.tumblr.com/abf58677166dc54706d6de643ec64324/tumblr_inline_prhrb3oVR61wqfwiw_1280.jpg'
-    },
-];
+import Category from '../../components/Category';
+
+import { ESTABELECIMENTOS, CATEGORIAS, PRODUTOS } from '../../mock';
+
 
 const DATA = {
     id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
     name: 'COMERCIAL ZAFARI',
     image: 'https://aguiarbuenosaires.com/wp-content/uploads/2016/06/carnes-argentinas-cortes-dicas-cortes-2.jpg'
 }
-
-const PRODUCTS = [
-    {
-        id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-        name: 'Primeiro Produto',
-        price: '9,99',
-        image: 'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQM5R2lJiuLjlH6HRfuxR3ubmi8R7d9AFOz3A&usqp=CAU'
-    },
-    {
-        id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-        name: 'Segundo Produto',
-        price: '19,99',
-        image: 'https://carrefourbr.vtexassets.com/arquivos/ids/189948-800-auto?width=800&height=auto&aspect=true'
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571ea29d72',
-        name: 'Terceiro Produto',
-        price: '29,99',
-        image: 'https://media.glassdoor.com/sqll/2482728/zaffari-squarelogo-1558435516909.png'
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571ea129d72',
-        name: 'Terceiro Produto',
-        price: '29,99',
-        image: 'https://media.glassdoor.com/sqll/2482728/zaffari-squarelogo-1558435516909.png'
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571ea219d72',
-        name: 'Terceiro Produto',
-        price: '29,99',
-        image: 'https://media.glassdoor.com/sqll/2482728/zaffari-squarelogo-1558435516909.png'
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571ea259d72',
-        name: 'Terceiro Produto',
-        price: '29,99',
-        image: 'https://media.glassdoor.com/sqll/2482728/zaffari-squarelogo-1558435516909.png'
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571ea2967d72',
-        name: 'Terceiro Produto',
-        price: '29,99',
-        image: 'https://media.glassdoor.com/sqll/2482728/zaffari-squarelogo-1558435516909.png'
-    },
-];
-
-
 
 const windowWidth = Dimensions.get('window').width;
 
@@ -101,10 +40,10 @@ const Product = ({ name, image, price }) => (
     </View>
 );
 
-const Profile = ({ navigation: { goBack } }) => {
+const Profile = ({ navigation }) => {
 
-    const renderItem = ({ item }) => (
-        <Item key={item.id} name={item.name} image={item.image} />
+    const renderCategory = ({ item }) => (
+        <Category id={item.id} name={item.name} image={item.image} navigation={navigation} redirectTo='Category' />
     );
 
     const renderProducts = ({ item }) => (
@@ -120,7 +59,7 @@ const Profile = ({ navigation: { goBack } }) => {
                 <ScrollView style={styles.scrollView}>
 
                     <View style={styles.profile}>
-                        <TouchableOpacity style={styles.iconBack} onPress={() => goBack()}>
+                        <TouchableOpacity style={styles.iconBack} onPress={() => navigation.goBack()}>
                             <AntDesign name="arrowleft" size={24} color="#fff" />
                         </TouchableOpacity>
                         {/* <Image style={styles.profileBackground} source={{ uri: 'https://i.pinimg.com/originals/31/0b/15/310b15fbf06808f61c04d92112439273.png' }} /> */}
@@ -135,8 +74,8 @@ const Profile = ({ navigation: { goBack } }) => {
                             <Text style={styles.title}>Categorias</Text>
                             <FlatList
                                 horizontal
-                                data={CATEGORY}
-                                renderItem={renderItem}
+                                data={CATEGORIAS}
+                                renderItem={renderCategory}
                                 keyExtractor={item => item.id}
                                 showsHorizontalScrollIndicator={false}
                                 contentContainerStyle={{ paddingRight: 15 }}
@@ -145,7 +84,7 @@ const Profile = ({ navigation: { goBack } }) => {
 
                         <View style={styles.products}>
                             <FlatList
-                                data={PRODUCTS}
+                                data={PRODUTOS}
                                 renderItem={renderProducts}
                                 keyExtractor={item => item.id}
                             />
@@ -168,20 +107,26 @@ const styles = StyleSheet.create({
     },
     profile: {
         paddingHorizontal: 10,
-        minHeight: windowWidth * 0.6,
+        minHeight: 250,
+        // minHeight: windowWidth * 0.6,
         alignItems: 'center',
         marginBottom: 15
     },
     profileBackground: {
-        height: windowWidth * 0.3,
+        // height: windowWidth * 0.3,
+        // width: windowWidth,
+        // marginBottom: -1 * (windowWidth * 0.4) / 2,
+        height: 150,
         width: windowWidth,
-        marginBottom: -1 * (windowWidth * 0.4) / 2,
+        marginBottom: 200,
     },
     profileColorBackground: {
         backgroundColor: '#2c4e72',
-        height: windowWidth * 0.3,
+        height: 150,
+        // height: windowWidth * 0.3,
         width: windowWidth,
-        marginBottom: -1 * (windowWidth * 0.4) / 2,
+        marginBottom: -100,
+        // marginBottom: -1 * (windowWidth * 0.4) / 2,
     },
     iconBack: {
         top: 25,
@@ -190,15 +135,24 @@ const styles = StyleSheet.create({
         zIndex: 99,
     },
     profileAvatar: {
-        height: windowWidth * 0.4,
-        width: windowWidth * 0.4,
+        // height: windowWidth * 0.4,
+        // width: windowWidth * 0.4,
+        height: 200,
+        width: 200,
         aspectRatio: 1,
-        borderRadius: 100,
+        borderRadius: 200,
         overflow: 'hidden',
     },
-    category: { flex: 1, marginRight: -15, marginBottom: 25, },
+    category: {
+        flex: 1,
+        minHeight: 200,
+        paddingHorizontal: 15,
+        marginRight: -15,
+        marginBottom: 15
+    },
     popular: { flex: 1.5 },
     title: {
+        marginTop: 10,
         fontSize: 26,
         color: '#0b355d',
         fontWeight: 'bold'
